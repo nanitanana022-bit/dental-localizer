@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Dental Localizer — prototype de localisation des gênes et douleurs dentaires." />
+  <title>Dental Localizer — Phase 1</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#">
+      <span class="brand-mark">✦</span>
+      <span>Dental<span>Localizer</span></span>
+    </a>
+    <div class="top-actions">
+      <span class="secure"><span class="dot"></span> Prototype clinique</span>
+      <button class="lang">FR</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">PRÉ-CONSULTATION DENTAIRE</p>
+        <h1>Montrez-nous <em>où</em> vous ressentez une gêne.</h1>
+        <p class="hero-copy">
+          Une interface simple pour localiser une ou plusieurs zones, préciser vos symptômes
+          et transmettre un résumé structuré au praticien.
+        </p>
+      </div>
+      <div class="progress-card">
+        <div class="progress-label"><span>Votre parcours</span><strong id="progressText">1 / 3</strong></div>
+        <div class="progress"><span id="progressBar"></span></div>
+        <div class="steps"><span class="active">Localiser</span><span>Décrire</span><span>Résumé</span></div>
+      </div>
+    </section>
+
+    <section class="workspace">
+      <div class="panel model-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="panel-kicker">ÉTAPE 01</p>
+            <h2>Localisez la gêne</h2>
+          </div>
+          <span class="multi-badge">Sélection multiple</span>
+        </div>
+
+        <div class="instructions">
+          <span class="instruction-icon">↻</span>
+          <span>Faites glisser pour faire pivoter • molette pour zoomer • cliquez sur plusieurs zones</span>
+        </div>
+
+        <div id="scene" class="scene" aria-label="Modèle dentaire 3D interactif"></div>
+
+        <div class="selection-bar">
+          <div>
+            <span class="muted">Zones sélectionnées</span>
+            <div id="selectedChips" class="chips"><span class="empty-chip">Aucune zone</span></div>
+          </div>
+          <button id="clearBtn" class="text-btn">Tout effacer</button>
+        </div>
+      </div>
+
+      <aside class="panel form-panel">
+        <div class="panel-heading compact">
+          <div>
+            <p class="panel-kicker">SYMPTÔMES</p>
+            <h2>Que ressentez-vous ?</h2>
+          </div>
+        </div>
+
+        <label>Type de gêne</label>
+        <div class="symptom-grid" id="symptoms">
+          <button data-value="Douleur" class="symptom">Douleur</button>
+          <button data-value="Sensibilité" class="symptom">Sensibilité</button>
+          <button data-value="Pression" class="symptom">Pression</button>
+          <button data-value="Gêne à la mastication" class="symptom">Mastication</button>
+          <button data-value="Mobilité" class="symptom">Mobilité</button>
+          <button data-value="Autre" class="symptom">Autre</button>
+        </div>
+
+        <label for="intensity">Intensité <span id="intensityValue">5/10</span></label>
+        <div class="range-wrap">
+          <input id="intensity" type="range" min="0" max="10" value="5" />
+          <div class="range-labels"><span>0 — Aucune</span><span>10 — Très forte</span></div>
+        </div>
+
+        <label for="duration">Depuis combien de temps ?</label>
+        <select id="duration">
+          <option value="">Sélectionner</option>
+          <option>Moins de 24 heures</option>
+          <option>1 à 7 jours</option>
+          <option>1 à 4 semaines</option>
+          <option>Plus d'un mois</option>
+          <option>Je ne sais pas</option>
+        </select>
+
+        <label for="trigger">Qu'est-ce qui déclenche ou aggrave la gêne ?</label>
+        <div class="trigger-grid" id="triggers">
+          <button data-value="Froid">Froid</button>
+          <button data-value="Chaud">Chaud</button>
+          <button data-value="Sucré">Sucré</button>
+          <button data-value="Mastication">Mastication</button>
+          <button data-value="Spontanée">Spontanée</button>
+          <button data-value="Aucun">Aucun</button>
+        </div>
+
+        <label for="notes">Précisions <span class="optional">Optionnel</span></label>
+        <textarea id="notes" rows="3" placeholder="Décrivez la gêne avec vos propres mots…"></textarea>
+
+        <button id="continueBtn" class="primary-btn">Continuer <span>→</span></button>
+        <p id="error" class="error" role="alert"></p>
+      </aside>
+    </section>
+
+    <section id="summarySection" class="panel summary-panel hidden">
+      <div class="summary-header">
+        <div>
+          <p class="panel-kicker">ÉTAPE 03</p>
+          <h2>Votre résumé</h2>
+          <p>Vérifiez les informations avant de les transmettre au praticien.</p>
+        </div>
+        <button id="editBtn" class="secondary-btn">Modifier</button>
+      </div>
+      <div id="summaryContent" class="summary-grid"></div>
+      <div class="disclaimer">
+        <span>ⓘ</span>
+        <p>Cet outil aide à décrire une gêne et ne constitue pas un diagnostic médical.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>DentalLocalizer · Prototype Phase 1</span>
+    <span>Interface de pré-consultation dentaire</span>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.179.1/build/three.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
