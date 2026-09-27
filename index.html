@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Dental Localizer — prototype de localisation des gênes et douleurs dentaires." />
-  <title>Dental Localizer — Phase 1</title>
+  <title>Dental Localizer — 3D Prototype</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -156,11 +156,30 @@
   </main>
 
   <footer>
-    <span>DentalLocalizer · Prototype Phase 1</span>
+    <span>DentalLocalizer · Prototype 3D</span>
     <span>Interface de pré-consultation dentaire</span>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/three@0.179.1/build/three.min.js"></script>
-  <script src="app.js"></script>
+  <script>
+    (function loadThreeThenApp(){
+      const urls=[
+        "https://cdn.jsdelivr.net/npm/three@0.179.1/build/three.min.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/three.js/r179/three.min.js"
+      ];
+      let index=0;
+      function load(){
+        if(index>=urls.length){
+          document.getElementById('scene').innerHTML='<div class="three-error"><strong>Le modèle 3D ne s’est pas chargé.</strong><span>Vérifiez votre connexion Internet puis actualisez la page.</span></div>';
+          return;
+        }
+        const s=document.createElement('script');
+        s.src=urls[index++];
+        s.onload=()=>{ const app=document.createElement('script'); app.src='app.js'; document.body.appendChild(app); };
+        s.onerror=load;
+        document.head.appendChild(s);
+      }
+      load();
+    })();
+  </script>
 </body>
 </html>

@@ -9,9 +9,9 @@ const sceneEl=document.getElementById("scene"), selectedChips=document.getElemen
 
 if(!window.THREE) throw new Error("Three.js n'est pas chargé.");
 const scene=new THREE.Scene();
-const camera=new THREE.PerspectiveCamera(40,1,.1,100); camera.position.set(0,8.8,16.5);
+const camera=new THREE.PerspectiveCamera(36,1,.1,100); camera.position.set(0,5.1,14.8); camera.lookAt(0,0,0);
 const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
-renderer.setPixelRatio(Math.min(window.devicePixelRatio,2)); renderer.outputColorSpace=THREE.SRGBColorSpace;
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2)); renderer.outputColorSpace=THREE.SRGBColorSpace; renderer.setClearColor(0x000000,0);
 sceneEl.appendChild(renderer.domElement);
 const root=new THREE.Group(); scene.add(root);
 scene.add(new THREE.HemisphereLight(0xffffff,0xc7d6d3,2));
@@ -80,6 +80,7 @@ addPalate();addTongue();addMucosa();
 const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();let dragging=false,lastX=0,lastY=0,dragMoved=false;
 const tooltip=document.createElement("div");tooltip.className="zone-tooltip";sceneEl.appendChild(tooltip);
 function resize(){const w=sceneEl.clientWidth||600,h=sceneEl.clientHeight||470;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false);}window.addEventListener("resize",resize);resize();
+root.rotation.x=-0.10;
 function hitAt(e){const r=renderer.domElement.getBoundingClientRect();pointer.x=((e.clientX-r.left)/r.width)*2-1;pointer.y=-((e.clientY-r.top)/r.height)*2+1;raycaster.setFromCamera(pointer,camera);return raycaster.intersectObjects(root.children,true).find(h=>h.object.userData.interactive);}
 sceneEl.addEventListener("pointerdown",e=>{dragging=true;dragMoved=false;lastX=e.clientX;lastY=e.clientY;});window.addEventListener("pointerup",()=>dragging=false);
 window.addEventListener("pointermove",e=>{if(!dragging){const h=hitAt(e);if(h){tooltip.textContent=h.object.userData.zoneName;tooltip.classList.add("visible");}else tooltip.classList.remove("visible");return;}const dx=e.clientX-lastX,dy=e.clientY-lastY;if(Math.abs(dx)+Math.abs(dy)>2)dragMoved=true;root.rotation.y+=dx*.0065;root.rotation.x=Math.max(-.5,Math.min(.5,root.rotation.x+dy*.0035));lastX=e.clientX;lastY=e.clientY;});

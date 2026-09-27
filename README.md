@@ -25,3 +25,6 @@ Il s'agit d'un prototype procédural en Three.js, pas encore d'un modèle anatom
 ## Installation
 
 Aucune installation npm requise. Ouvrir `index.html` ou publier les fichiers sur GitHub Pages. Une connexion Internet est nécessaire pour charger Three.js et les polices depuis leurs CDN.
+
+
+FIXED: this build corrects the 3D camera alignment and adds a fallback if the Three.js CDN is temporarily unavailable.
