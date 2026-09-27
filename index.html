@@ -54,7 +54,20 @@
           <span>Faites glisser pour faire pivoter • molette pour zoomer • cliquez sur plusieurs zones</span>
         </div>
 
-        <div id="scene" class="scene" aria-label="Modèle dentaire 3D interactif"></div>
+        <div class="model-toolbar">
+  <button class="view-btn active" data-view="full">Bouche complète</button>
+  <button class="view-btn" data-view="maxilla">Maxillaire</button>
+  <button class="view-btn" data-view="mandible">Mandibule</button>
+  <button class="view-btn" data-view="soft">Muqueuses</button>
+</div>
+<div id="scene" class="scene" aria-label="Modèle anatomique 3D interactif de la cavité buccale"></div>
+<div class="anatomy-legend">
+  <span><i class="legend-swatch tooth"></i>Dents</span>
+  <span><i class="legend-swatch gum"></i>Gencive / crêtes</span>
+  <span><i class="legend-swatch mucosa"></i>Muqueuse</span>
+  <span><i class="legend-swatch palate"></i>Palais</span>
+  <span><i class="legend-swatch tongue"></i>Langue</span>
+</div>
 
         <div class="selection-bar">
           <div>
