@@ -1,5 +1,5 @@
 const state = {
-  selectedZones: new Map(), symptom:"", intensity:5, duration:"", triggers:new Set(), notes:"", activeView:"full"
+  selectedZones: new Map(), symptom:"", intensity:5, duration:"", triggers:new Set(), notes:"", activeView:"full", mode:"dentate"
 };
 
 const sceneEl=document.getElementById("scene"), selectedChips=document.getElementById("selectedChips"),
@@ -89,10 +89,38 @@ sceneEl.addEventListener("click",e=>{if(dragMoved)return;const h=hitAt(e);if(!h)
 function renderChips(){if(!state.selectedZones.size){selectedChips.innerHTML='<span class="empty-chip">Aucune zone</span>';return;}selectedChips.innerHTML=[...state.selectedZones.values()].map(z=>`<span class="chip">${escapeHtml(z.name)}</span>`).join("");}
 clearBtn.addEventListener("click",()=>{state.selectedZones.clear();updateSelected();renderChips();});
 
+const prostheticModes={dentate:"Patient denté",ppa:"PPA",pac:"PAC"};
+function applyMode(mode){
+  state.mode=mode;
+  root.traverse(o=>{
+    if(!o.userData.interactive) return;
+    let visible=true;
+    if(mode==="pac" && o.userData.type==="tooth") visible=false;
+    if(mode==="ppa" && o.userData.type==="tooth"){
+      const n=o.userData.toothLabel||"";
+      // Keep a representative set of pillar teeth visible for the prototype.
+      visible=["16","14","24","26","36","34","44","46"].includes(n);
+    }
+    o.visible=visible;
+  });
+  // In PAC mode, keep soft tissues and edentulous ridges emphasized.
+  document.querySelectorAll(".mode-btn").forEach(b=>b.classList.toggle("active",b.dataset.mode===mode));
+}
+document.querySelectorAll(".mode-btn").forEach(btn=>btn.addEventListener("click",()=>{applyMode(btn.dataset.mode);}));
 document.querySelectorAll(".view-btn").forEach(btn=>btn.addEventListener("click",()=>{
   document.querySelectorAll(".view-btn").forEach(b=>b.classList.remove("active"));btn.classList.add("active");state.activeView=btn.dataset.view;
-  root.traverse(o=>{let v=true;if(state.activeView==="maxilla")v=o.userData.arch==="upper"||o.userData.anatomy==="palais"||o.userData.anatomy==="gencive"||o.userData.anatomy==="ridge";if(state.activeView==="mandible")v=o.userData.arch==="lower"||o.userData.anatomy==="langue"||o.userData.anatomy==="muqueuse"||o.userData.anatomy==="gencive"||o.userData.anatomy==="ridge";if(state.activeView==="soft")v=["muqueuse","palais","langue","gencive","ridge"].includes(o.userData.anatomy);o.visible=v;});
+  root.traverse(o=>{
+    if(!o.userData.interactive) return;
+    let v=true;
+    if(state.activeView==="maxilla") v=o.userData.arch==="upper"||["palais","gencive","ridge"].includes(o.userData.anatomy);
+    if(state.activeView==="mandible") v=o.userData.arch==="lower"||["langue","muqueuse","gencive","ridge"].includes(o.userData.anatomy);
+    if(state.activeView==="soft") v=["muqueuse","palais","langue","gencive","ridge"].includes(o.userData.anatomy);
+    if(state.mode==="pac" && o.userData.type==="tooth") v=false;
+    if(state.mode==="ppa" && o.userData.type==="tooth") v=["16","14","24","26","36","34","44","46"].includes(o.userData.toothLabel||"");
+    o.visible=v;
+  });
 }));
+applyMode(state.mode);
 
 document.querySelectorAll("#symptoms .symptom").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("#symptoms .symptom").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");state.symptom=b.dataset.value;}));
 const intensity=document.getElementById("intensity"),intensityValue=document.getElementById("intensityValue");intensity.addEventListener("input",()=>{state.intensity=intensity.value;intensityValue.textContent=`${intensity.value}/10`;});

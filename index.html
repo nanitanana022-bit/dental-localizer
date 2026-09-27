@@ -44,17 +44,25 @@
         <div class="panel-heading">
           <div>
             <p class="panel-kicker">ÉTAPE 01</p>
-            <h2>Localisez la gêne</h2>
+            <h2>Localisez la gêne</h2><p class="model-subtitle">Touchez directement une dent, une gencive, une crête édentée, le palais ou toute autre structure visible.</p>
           </div>
           <span class="multi-badge">Sélection multiple</span>
         </div>
 
         <div class="instructions">
           <span class="instruction-icon">↻</span>
-          <span>Faites glisser pour faire pivoter • molette pour zoomer • cliquez sur plusieurs zones</span>
+          <span>Faites glisser pour faire pivoter • molette pour zoomer • cliquez/touchez plusieurs zones</span>
         </div>
 
-        <div class="model-toolbar">
+        <div class="mode-block">
+  <span class="toolbar-label">Situation prothétique</span>
+  <div class="mode-toolbar">
+    <button class="mode-btn active" data-mode="dentate">Patient denté</button>
+    <button class="mode-btn" data-mode="ppa">PPA</button>
+    <button class="mode-btn" data-mode="pac">PAC</button>
+  </div>
+</div>
+<div class="model-toolbar">
   <button class="view-btn active" data-view="full">Bouche complète</button>
   <button class="view-btn" data-view="maxilla">Maxillaire</button>
   <button class="view-btn" data-view="mandible">Mandibule</button>

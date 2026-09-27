@@ -1,7 +1,27 @@
 # Dental Localizer — Phase 2
 
-Prototype de pré-consultation dentaire avec modèle anatomique 3D procédural et sélection multi-zones.
+Prototype 3D interactif de pré-localisation des gênes bucco-dentaires.
 
-Ajouts : 32 dents FDI maxillaires et mandibulaires, gencive marginale, crêtes alvéolaires, palais dur et voile du palais, rugae palatines, muqueuses labiales et jugales, plancher buccal, langue, triangles rétromolaires, sélection simultanée de plusieurs zones, et vues Bouche complète / Maxillaire / Mandibule / Muqueuses.
+## Ce prototype ajoute
 
-Important : le modèle est un prototype procédural. Pour une version vraiment clinique/professionnelle, la prochaine étape est d'intégrer un modèle anatomique 3D détaillé au format GLB/GLTF, avec des maillages séparés pour chaque dent et zone anatomique.
+- Modèle 3D interactif de la cavité buccale
+- 32 dents avec numérotation FDI
+- Gencive marginale
+- Crêtes alvéolaires / zones édentées
+- Palais dur, voile du palais et rugae
+- Langue
+- Muqueuses labiales et jugales
+- Plancher buccal
+- Triangles rétromolaires
+- Sélection multiple par toucher/clic
+- Modes Patient denté / PPA / PAC
+- Vues bouche complète / maxillaire / mandibule / tissus mous
+- Résumé structuré des zones sélectionnées
+
+## À savoir
+
+Il s'agit d'un prototype procédural en Three.js, pas encore d'un modèle anatomique clinique haute résolution. Une prochaine itération pourra utiliser un modèle 3D anatomique dédié avec des surfaces distinctes pour chaque structure et chaque face dentaire.
+
+## Installation
+
+Aucune installation npm requise. Ouvrir `index.html` ou publier les fichiers sur GitHub Pages. Une connexion Internet est nécessaire pour charger Three.js et les polices depuis leurs CDN.
